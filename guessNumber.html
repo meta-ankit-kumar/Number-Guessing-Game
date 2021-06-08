@@ -1,0 +1,91 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<script>
+    window.onload = function () {
+        let randomNumber;
+        let numberOfTries;
+        loadGame = function () {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            numberOfTries = 1;
+        }
+        loadGame();
+        checkGuess = function () {
+            let guess = document.getElementById('guess-input').value;
+            let message = document.querySelector('.message');
+            //console.log(randomNumber);
+            if (guess > 100) {
+                message.innerHTML = "Please enter number between 1 and 100";
+                return;
+            }
+            else if (guess == randomNumber) {
+                message.innerHTML = "Congratulation.<br> You win.<br> Number of tries: " + numberOfTries;
+                document.getElementById('submit-button').style.display = "none";
+                document.getElementById('play-again').style.display = "block";
+            }
+            else if (guess < randomNumber) {
+                if (randomNumber - guess > 10)
+                    message.innerHTML = "Too Low.";
+                else
+                    message.innerHTML = "You're close to the answer.";
+            }
+            else if (guess > randomNumber) {
+                if (guess - randomNumber > 10)
+                    message.innerHTML = "Too High.";
+                else
+                    message.innerHTML = "You're close to the answer.";
+            }
+            document.getElementsByClassName("previous-guesses")[0].style.display = "block";
+            document.querySelector(".previous-guesses").innerHTML += " " + guess;
+            //console.log(guess);
+            numberOfTries += 1;
+            if (numberOfTries > 10) {
+                message.innerHTML = "You Lost.";
+                document.getElementById('submit-button').style.display = "none";
+                document.getElementById('play-again').style.display = "block";
+            }
+        }
+    }
+</script>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Welcome to the number guessing game</h1>
+            <p>Please guess a number between 1 to 100 including both.</p>
+            <p class="previous-guesses" style="display: none;">Previous Guesses:&nbsp;</p>
+            <p class="message"></p>
+            <form onsubmit="checkGuess()">
+                <input class="form-control" type="number" placeholder="Enter your guess" id='guess-input' required>
+                <button class="btn btn-primary mt-3 " id="submit-button" type="submit">Submit</button>
+            </form>
+            <button class="btn btn-primary mt-4 " id="play-again" style="display: none;"
+                onclick="location.reload()">Play Again</button>
+        </div>
+    </div>
+    <footer class="bg-light text-center text-lg-start footer fixed-bottom">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <a class="text-dark" href="https://mdbootstrap.com/">Built by @AnkitKumarBishnoi</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
